@@ -1,0 +1,95 @@
+/*html*/
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>To-Do List</title>
+	<link rel="stylesheet" href="style2.css">
+</head>
+<body>
+	<h1>To-Do List</h1>
+	<input type="text" id="task-input" placeholder="Enter a task">
+	<button id="add-task-btn">Add Task</button>
+	<ul id="task-list"></ul>
+
+	<script src="script2.js"></script>
+</body>
+</html>
+/*css*/
+body {
+	font-family: Arial, sans-serif;
+}
+
+#task-input {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 20px;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#add-task-btn {
+	background-color: #4CAF50;
+	color: #fff;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#task-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#task-list li {
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+#task-list li:last-child {
+	border-bottom: none;
+}
+
+.completed {
+	text-decoration: line-through;
+	color: #888;
+}
+
+.delete-btn {
+	background-color: #red;
+	color: #fff;
+	padding: 5px 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+/*javascript*/
+const taskInput = document.getElementById('task-input');
+const addTaskBtn = document.getElementById('add-task-btn');
+const taskList = document.getElementById('task-list');
+
+addTaskBtn.addEventListener('click', addTask);
+
+function addTask() {
+	const task = taskInput.value.trim();
+	if (task) {
+		const taskListItem = document.createElement('li');
+		taskListItem.textContent = task;
+		taskListItem.innerHTML += '<button class="delete-btn">X</button>';
+		taskList.appendChild(taskListItem);
+		taskInput.value = '';
+	}
+}
+
+taskList.addEventListener('click', (e) => {
+	if (e.target.tagName === 'LI') {
+		e.target.classList.toggle('completed');
+	}
+	if (e.target.className === 'delete-btn') {
+		e.target.parentNode.remove();
+	}
+});
